@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+    <product>
+        <name>Laptop</name>
+        <price>1200</price>
+        <category>Electronics</category>
+    </product>
+    <product>
+        <name>Smartphone</name>
+        <price>800</price>
+        <category>Electronics</category>
+    </product>
+    <product>
+        <name>Book</name>
+        <price>20</price>
+        <category>Books</category>
+    </product>
+</products>

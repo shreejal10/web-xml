@@ -1,0 +1,52 @@
+<!-- Create an HTML form that collects user information (e.g., name, email). Use JavaScript to dynamically generate an XML document based on the form data when the user submits the form. -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>2</title>
+</head>
+
+<body>
+    <form action="" method="post">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required><br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div>
+        <h1>Lab 5</h1>
+        <h3>2. Create an HTML form that collects user information (e.g., name, email). Use JavaScript to dynamically
+            generate an XML
+            document based on the form data when the user submits the form.</h3>
+        <h2>Shreejal Dhungana</h2>
+    </div>
+
+    <script>
+        function createXML() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+
+            var xml = "<?xml version='1.0' encoding='UTF-8'?>";
+            xml += "<user>";
+            xml += "<name>" + name + "</name>";
+            xml += "<email>" + email + "</email>";
+            xml += "</user>";
+
+            return xml;
+        }
+
+        document.querySelector("form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var xml = createXML();
+            console.log(xml);
+
+        });
+    </script>
+
+</body>
+
+
+</html>

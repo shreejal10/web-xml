@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Collection</title>
+</head>
+
+<body>
+    <h1>Book Collection</h1>
+
+    <h2>Books by Author</h2>
+    <select id="authorSelect" onchange="getBooksByAuthor()">
+        <option value="">Select Author</option>
+    </select>
+    <ul id="booksByAuthor"></ul>
+
+    <h2>Books by Title</h2>
+    <select id="titleSelect" onchange="getBooksByTitle()">
+        <option value="">Select Title</option>
+    </select>
+    <ul id="booksByTitle"></ul>
+
+    <script>
+        function loadXMLDoc(filename) {
+            if (window.ActiveXObject) {
+                xhttp = new ActiveXObject("Msxml2.XMLHTTP");
+            } else {
+                xhttp = new XMLHttpRequest();
+            }
+            xhttp.open("GET", filename, false);
+            try {
+                xhttp.responseType = "msxml-document";
+            } catch (err) { } // Helping IE11
+            xhttp.send("");
+            return xhttp.responseXML;
+        }
+
+        function getAuthors() {
+            var xmlDoc = loadXMLDoc("books.xml");
+            var authors = xmlDoc.evaluate('//author', xmlDoc, null, XPathResult.ANY_TYPE, null);
+            var authorSelect = document.getElementById("authorSelect");
+
+            var author = authors.iterateNext();
+            while (author) {
+                var option = document.createElement("option");
+                option.value = author.textContent;
+                option.appendChild(document.createTextNode(author.textContent));
+                authorSelect.appendChild(option);
+                author = authors.iterateNext();
+            }
+        }
+
+        function getTitles() {
+            var xmlDoc = loadXMLDoc("books.xml");
+            var titles = xmlDoc.evaluate('//title', xmlDoc, null, XPathResult.ANY_TYPE, null);
+            var titleSelect = document.getElementById("titleSelect");
+
+            var title = titles.iterateNext();
+            while (title) {
+                var option = document.createElement("option");
+                option.value = title.textContent;
+                option.appendChild(document.createTextNode(title.textContent));
+                titleSelect.appendChild(option);
+                title = titles.iterateNext();
+            }
+        }
+
+        function getBooksByAuthor() {
+            var selectedAuthor = document.getElementById("authorSelect").value;
+            var xmlDoc = loadXMLDoc("books.xml");
+            var books = xmlDoc.evaluate('//book[author="' + selectedAuthor + '"]', xmlDoc, null, XPathResult.ANY_TYPE, null);
+            var booksByAuthor = document.getElementById("booksByAuthor");
+            booksByAuthor.innerHTML = "";
+
+            var book = books.iterateNext();
+            while (book) {
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode(book.getElementsByTagName("title")[0].textContent));
+                booksByAuthor.appendChild(li);
+                book = books.iterateNext();
+            }
+        }
+
+        function getBooksByTitle() {
+            var selectedTitle = document.getElementById("titleSelect").value;
+            var xmlDoc = loadXMLDoc("books.xml");
+            var books = xmlDoc.evaluate('//book[title="' + selectedTitle + '"]', xmlDoc, null, XPathResult.ANY_TYPE, null);
+            var booksByTitle = document.getElementById("booksByTitle");
+            booksByTitle.innerHTML = "";
+
+            var book = books.iterateNext();
+            while (book) {
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode(book.getElementsByTagName("author")[0].textContent));
+                booksByTitle.appendChild(li);
+                book = books.iterateNext();
+            }
+        }
+
+        // Populate author and title dropdowns on page load
+        window.onload = function () {
+            getAuthors();
+            getTitles();
+        };
+    </script>
+    <div>
+        <h1>Lab 5</h1>
+        <h3>5. Design an XML dataset representing a collection of books. Implement XQuery to retrieve specific
+            information from the XML
+            dataset, such as titles or authors, and display the results on a webpage.</h3>
+        <h2>Shreejal Dhungana</h2>
+    </div>
+</body>
+
+</html>

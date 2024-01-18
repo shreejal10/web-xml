@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Shreejal Dhungana</title>
+</head>
+
+<body>
+    <script>
+        var xmlHttpRequest = new XMLHttpRequest();
+        xmlHttpRequest.open("GET", 'products.xml', true);
+        xmlHttpRequest.onreadystatechange = function () {
+            if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+                var xmlDoc = xmlHttpRequest.responseXML;
+                var xslHttpRequest = new XMLHttpRequest();
+                xslHttpRequest.open("GET", 'transform.xslt', true);
+                xslHttpRequest.onreadystatechange = function () {
+                    if (xslHttpRequest.readyState == 4 && xslHttpRequest.status == 200) {
+                        var xslDoc = xslHttpRequest.responseXML;
+                        var xsltProcessor = new XSLTProcessor();
+                        xsltProcessor.importStylesheet(xslDoc);
+                        var resultDoc = xsltProcessor.transformToDocument(xmlDoc);
+                        document.body.innerHTML = new XMLSerializer().serializeToString(resultDoc);
+                    }
+                };
+                xslHttpRequest.send();
+            }
+        };
+        xmlHttpRequest.send();
+    </script>
+</body>
+
+</html>

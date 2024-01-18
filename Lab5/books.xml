@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+  <book>
+    <title>Introduction to Computer Science</title>
+    <author>John Smith</author>
+    <genre>Computer Science</genre>
+    <year>2020</year>
+  </book>
+  <book>
+    <title>History of Art</title>
+    <author>Mary Johnson</author>
+    <genre>Art</genre>
+    <year>2018</year>
+  </book>
+</library>
